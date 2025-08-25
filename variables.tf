@@ -30,3 +30,16 @@ variable "user_department" {
   description = "The organization the user belongs to: dev, prod, qa"
   default     = "learn"
 }
+
+variable "AWS_PRIV_SUBNET_ID" {
+}
+variable "AWS_AMI_INST_ID" {
+}
+variable "AWS_VPC_CIDR_BLOCK" {
+}
+variable "AWS_SECY_GRP_IN_CIDR_BLOCK" {
+}
+variable "AWS_SECY_GRP_EG_CIDR_BLOCK" {
+}
+variable "AWS_SECY_GRP_FOR_EC2_DEFAULT" {
+}

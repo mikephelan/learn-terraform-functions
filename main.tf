@@ -11,6 +11,10 @@ provider "aws" {
   }
 }
 
+provider "random" {}
+
+resource "random_pet" "name" {}
+
 data "aws_ami" "ubuntu" {
   most_recent = true
 
@@ -76,9 +80,14 @@ resource "aws_security_group" "sg_8080" {
 
 
 resource "aws_instance" "web" {
-  ami                         = data.aws_ami.ubuntu.id
-  instance_type               = "t2.micro"
-  subnet_id                   = aws_subnet.subnet_public.id
-  vpc_security_group_ids      = [aws_security_group.sg_8080.id]
+  ami           = var.AWS_AMI_INST_ID
+  instance_type = "t2.micro"
+  vpc_security_group_ids = [var.AWS_SECY_GRP_FOR_EC2_DEFAULT]
+  subnet_id = var.AWS_PRIV_SUBNET_ID
   associate_public_ip_address = true
+  user_data                    = templatefile("user_data.tftpl", {department = var.user_department, name = var.user_name})
+
+  tags = {
+    Name = random_pet.name.id
+  }
 }
