@@ -31,6 +31,15 @@ variable "user_department" {
   default     = "learn"
 }
 
+variable "aws_amis" {
+  type = map
+  default = {
+    "us-east-1" = "ami-04b70fa74e45c3917"
+    "us-west-2" = "ami-08012c0a9ee8e21c4"
+    "us-east-2" = "ami-09040d770ffe2224f"
+  }
+}
+
 variable "AWS_PRIV_SUBNET_ID" {
 }
 variable "AWS_AMI_INST_ID" {

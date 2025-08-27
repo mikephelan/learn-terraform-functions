@@ -15,22 +15,6 @@ provider "random" {}
 
 resource "random_pet" "name" {}
 
-data "aws_ami" "ubuntu" {
-  most_recent = true
-
-  filter {
-    name   = "name"
-    values = ["ubuntu/images/hvm-ssd-gp3/ubuntu-noble-24.04-amd64-server-*"]
-  }
-
-  filter {
-    name   = "virtualization-type"
-    values = ["hvm"]
-  }
-
-  owners = ["099720109477"] # Canonical
-}
-
 resource "aws_vpc" "vpc" {
   cidr_block           = var.cidr_vpc
   enable_dns_support   = true
@@ -80,7 +64,7 @@ resource "aws_security_group" "sg_8080" {
 
 
 resource "aws_instance" "web" {
-  ami           = var.AWS_AMI_INST_ID
+  ami = lookup(var.aws_amis, var.aws_region)
   instance_type = "t2.micro"
   vpc_security_group_ids = [var.AWS_SECY_GRP_FOR_EC2_DEFAULT]
   subnet_id = var.AWS_PRIV_SUBNET_ID
